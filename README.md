@@ -35,18 +35,15 @@ mask = x.unsqueeze(0) == x.unsqueeze(1)
 print(mask)
 ```
 Output:
-```
+```python
 tensor([[ True, False, False, False],
         [False,  True, False, False],
         [False, False,  True,  True],
         [False, False,  True,  True]])
+
+# mask[0, 0] means x[0] == x[0]; 
+# mask[1, 1] means x[1] == x[1]; 
+# mask[2, 3] means x[2] == x[3]; 
+# mask[3, 2] means x[3] == x[2]; 
+# mask[3, 3] means x[3] == x[3];
 ```
-mask[0, 0] means x[0] == x[0]; 
-
-mask[1, 1] means x[1] == x[1]; 
-
-mask[2, 3] means x[2] == x[3]; 
-
-mask[3, 2] means x[3] == x[2]; 
-
-mask[3, 3] means x[3] == x[3];
