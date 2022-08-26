@@ -13,10 +13,10 @@ Snippet Source: [InforNCE loss at SimCLR](https://github.com/sthalles/SimCLR/blo
 
 Examples: 
 ```python
-# input
+# we have
 tensor([1, 2, 3, 3])
 
-# output: 
+# we want: 
 tensor([[ True, False, False, False],
         [False,  True, False, False],
         [False, False,  True,  True],
