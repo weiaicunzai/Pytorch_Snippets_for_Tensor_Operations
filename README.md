@@ -12,8 +12,9 @@ The Pytorch Code Snippets for Complex Tensor Operations are therefore included i
 Snippet Source: [InforNCE loss at SimCLR](https://github.com/sthalles/SimCLR/blob/1848fc934ad844ae630e6c452300433fe99acfd9/simclr.py#L26)
 
 Code:
-```
+```python
 x = torch.tensor([1, 2, 3, 3])
+
 # x.unsqueeze(0) has a shape of [1, 4]
 # x.unsqueeze(1) has a shape of [4, 1]
 # == operations will make them both broadcast to shape[4, 4]
