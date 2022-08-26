@@ -11,6 +11,18 @@ The Pytorch Code Snippets for Complex Tensor Operations are therefore included i
 ## Symmetric Matrix Mask of Same Values in a 1D Tensor
 Snippet Source: [InforNCE loss at SimCLR](https://github.com/sthalles/SimCLR/blob/1848fc934ad844ae630e6c452300433fe99acfd9/simclr.py#L26)
 
+Examples: 
+```python
+# input
+tensor([1, 2, 3, 3])
+
+# output: 
+tensor([[ True, False, False, False],
+        [False,  True, False, False],
+        [False, False,  True,  True],
+        [False, False,  True,  True]])
+```
+
 Code:
 ```python
 x = torch.tensor([1, 2, 3, 3])
