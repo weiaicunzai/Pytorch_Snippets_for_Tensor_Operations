@@ -61,7 +61,7 @@ tensor([[ True, False, False, False],
 ```
 
 
-## Get the Index of Elements Which Are Different From the Last Element in a List
+## Get the Index (start from 1) of Elements Which Are Different From the Last Element in a List
 Snippet Source: [SWAV](https://github.com/facebookresearch/swav/blob/5e073db0cc69dea22aa75e92bfdd75011e888f28/src/resnet50.py#L308)
 
 Examples: 
