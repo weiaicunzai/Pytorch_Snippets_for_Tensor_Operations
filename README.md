@@ -59,3 +59,43 @@ tensor([[ True, False, False, False],
 # mask[3, 2] = True means x[3] == x[2]; 
 # mask[3, 3] = True means x[3] == x[3];
 ```
+
+
+## Get the Index of Elements Which Are Different From the Last Element in a List
+Snippet Source: [SWAV](https://github.com/facebookresearch/swav/blob/5e073db0cc69dea22aa75e92bfdd75011e888f28/src/resnet50.py#L308)
+
+Examples: 
+```python
+# we have
+tensor([22, 22, 33, 11, 11, 44])
+
+# we want: 
+tensor([2, 3, 5, 6])
+```
+
+Code:
+```python
+x = [22, 22, 33, 11, 11, 44]
+idx_crops = torch.cumsum(torch.unique_consecutive(
+            torch.tensor(x),
+            return_counts=True,
+        )[1], 0)
+
+
+# torch.unique_consecutive(torch.tensor(x), return_corners=True)
+# (tensor([22, 33, 11, 44]), tensor([2, 1, 2, 1]))
+
+#  torch.cumsum(torch.tensor([22, 33, 11, 44]))
+#  tensor([ 22,  55,  66, 110])
+print(idx_crops)
+```
+Output:
+```python
+tensor([2, 3, 5, 6])
+
+# the 2nd element of input 22
+# the 3rd element of input 33
+# the fifth element of input 11
+# the sixth element of input 44
+
+```
