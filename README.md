@@ -70,7 +70,7 @@ Examples:
 tensor([22, 22, 33, 11, 11, 44])
 
 # we want:
-tensor([2, 3, 5, 6])
+tensor([2, 3, 5, 6]) # 33 is different from 22, 11 is different from 33, 44 is different from 11
 ```
 
 Code:
