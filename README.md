@@ -178,7 +178,7 @@ Examples:
 img = torch.Tensor(3, 16, 224, 224)
 
 # we want
-sampled = img[K_indices]
+samples = img[K_indices]
 samples.shape # [K, 16]
 ```
 
