@@ -112,12 +112,12 @@ Pytorch build-in method
 
 example:
 returned 2D index:
-python```
+```python
 # shape [5, 3] five non zero values(each row), each row represent a 3 dimension index of a non zero value
 
-# the first colum represent the indices of all non zero values in the first dimension
-# the second colum represent the indices of all non zero values in the second dimension
-# the 3rd colum represent the indices of all non zero values in the 3rd dimension
+# the first column represent the indices of all non zero values in the first dimension
+# the second column represent the indices of all non zero values in the second dimension
+# the 3rd column represent the indices of all non zero values in the 3rd dimension
 
 indices = tensor([[0, 0, 0],
         [0, 1, 0],
