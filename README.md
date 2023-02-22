@@ -17,6 +17,9 @@ Examples:
 tensor([1, 2, 3, 3])
 
 # we want:
+# it is a symmetric matrix
+# the output[i, j] is True if input[i] == input[j], otherwise False
+# the first element of input is 1, 1 is unique in the list, so output[0, 0] is True
 tensor([[ True, False, False, False],
         [False,  True, False, False],
         [False, False,  True,  True],
