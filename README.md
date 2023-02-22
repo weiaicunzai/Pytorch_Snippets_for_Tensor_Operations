@@ -11,12 +11,12 @@ The Pytorch Code Snippets for Complex Tensor Operations are therefore included i
 ## Symmetric Matrix Mask of Same Values in a 1D Tensor
 Snippet Source: [InforNCE loss at SimCLR](https://github.com/sthalles/SimCLR/blob/1848fc934ad844ae630e6c452300433fe99acfd9/simclr.py#L26)
 
-Examples: 
+Examples:
 ```python
 # we have
 tensor([1, 2, 3, 3])
 
-# we want: 
+# we want:
 tensor([[ True, False, False, False],
         [False,  True, False, False],
         [False, False,  True,  True],
@@ -35,8 +35,8 @@ x = torch.tensor([1, 2, 3, 3])
 # tensor([[1, 2, 3, 3],
 #         [1, 2, 3, 3],
 #         [1, 2, 3, 3],
-#         [1, 2, 3, 3]]) 
-# 
+#         [1, 2, 3, 3]])
+#
 # x.unsqueeze(1) will broadcast to
 # tensor([[1, 1, 1, 1],
 #         [2, 2, 2, 2],
@@ -53,10 +53,10 @@ tensor([[ True, False, False, False],
         [False, False,  True,  True],
         [False, False,  True,  True]])
 
-# mask[0, 0] = True means x[0] == x[0]; 
-# mask[1, 1] = True means x[1] == x[1]; 
-# mask[2, 3] = True means x[2] == x[3]; 
-# mask[3, 2] = True means x[3] == x[2]; 
+# mask[0, 0] = True means x[0] == x[0];
+# mask[1, 1] = True means x[1] == x[1];
+# mask[2, 3] = True means x[2] == x[3];
+# mask[3, 2] = True means x[3] == x[2];
 # mask[3, 3] = True means x[3] == x[3];
 ```
 
@@ -64,12 +64,12 @@ tensor([[ True, False, False, False],
 ## Get the Index (start from 1) of Elements Which Are Different From the Last Element in a List
 Snippet Source: [SWAV](https://github.com/facebookresearch/swav/blob/5e073db0cc69dea22aa75e92bfdd75011e888f28/src/resnet50.py#L308)
 
-Examples: 
+Examples:
 ```python
 # we have
 tensor([22, 22, 33, 11, 11, 44])
 
-# we want: 
+# we want:
 tensor([2, 3, 5, 6])
 ```
 
@@ -98,4 +98,52 @@ tensor([2, 3, 5, 6])
 # the fifth element of input 11
 # the sixth element of input 44
 
+```
+
+
+## Random sample N elements of a tensor (numpy.random.choice Pytorch equivalent)
+Snippet Source: [ContrastiveSeg](https://github.com/tfzhou/ContrastiveSeg/blob/2ab84d8ec679adc7f7be1853c8684b44bf899273/lib/loss/loss_contrast_mem.py#L30)
+
+Examples:
+```python
+# we have
+img = torch.Tensor(3, 16, 224, 224)
+
+# we want
+sampled = img[K_indices]
+samples.shape # [K, 16]
+```
+
+
+Code:
+```python
+# tensor: example
+img = torch.Tensor(3, 16, 224, 224)
+
+# move the unsampled channel to the last
+img = img.permute(0, 2, 3, 1)
+# flatten the sampled dimension
+img = img.contiguous().view(-1, 16)
+
+# the population
+# here we set all the elements in the tensor as population for simplicity
+mask = torch.ones(3, 224, 224)
+# flatten the mask accordingly
+mask = mask.contiguous().view(-1, 1)
+
+K = 100 # number of samples
+
+# sample K indices
+indices = mask.nonzero()
+perm = torch.randperm(mask.numel())
+random_indices = perm[:K]
+
+
+print(img[random_indices].shape)
+
+```
+
+Output:
+```python
+torch.Size([100, 16])
 ```
