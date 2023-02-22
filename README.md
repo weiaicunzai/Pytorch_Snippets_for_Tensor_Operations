@@ -99,6 +99,71 @@ tensor([2, 3, 5, 6])
 # the sixth element of input 44
 
 ```
+## Explain of nonzero() method
+
+Pytorch build-in method
+1: always return a 2D tensor
+1: returns the indices of the non zero values
+2: the first dimension of the 2D tensor represents the number of the non zero values
+3: the second dimension of the 2D tensor represents the indices of each dimension of the non zero values.
+
+example:
+returned 2D index:
+python```
+# shape [5, 3] five non zero values(each row), each row represent a 3 dimension index of a non zero value
+
+# the first colum represent the indices of all non zero values in the first dimension
+# the second colum represent the indices of all non zero values in the second dimension
+# the 3rd colum represent the indices of all non zero values in the 3rd dimension
+
+indices = tensor([[0, 0, 0],
+        [0, 1, 0],
+        [1, 0, 0],
+        [1, 1, 0],
+        [1, 1, 1]])
+
+img[indices[0]] # get the first non zero values ([0, 0, 0] means the first non zero value is in the 0th of first dim, 0th of the 2nd dim, 0th of the 3rd dim)
+```
+
+```python
+a = torch.tensor([1, 0, 3, 0])
+print(a.nonzero())
+```
+
+Output:
+```python
+# shape: [2, 1]    tensor a contains two non zero values, the first element is at
+tensor([[0],
+        [2]])
+```
+
+```python
+a = torch.tensor([[1, 0], [3, 0]])
+print(a.nonzero())
+```
+
+Output:
+```python
+tensor([[0, 0],
+        [1, 0]])
+```
+
+```python
+a = torch.tensor([[[1, 0], [3, 0]], [[3, 0], [4, 5]]])
+print(a.nonzero())
+```
+
+Output:
+```python
+# shape [5, 3] : 5 non zero values, each are represented in a 3D index
+tensor([[0, 0, 0],
+        [0, 1, 0],
+        [1, 0, 0],
+        [1, 1, 0],
+        [1, 1, 1]])
+```
+
+
 
 
 ## Random sample N elements of a tensor (numpy.random.choice Pytorch equivalent)
