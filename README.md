@@ -197,12 +197,13 @@ img = img.contiguous().view(-1, 16)
 # here we set all the elements in the tensor as population for simplicity
 mask = torch.ones(3, 224, 224)
 # flatten the mask accordingly
-mask = mask.contiguous().view(-1, 1)
+mask = mask.contiguous().view(-1)
+
 
 K = 100 # number of samples
 
 # sample K indices
-indices = mask.nonzero()
+indices = mask.nonzero().squeeze(-1)
 perm = torch.randperm(mask.numel())
 random_indices = perm[:K]
 
