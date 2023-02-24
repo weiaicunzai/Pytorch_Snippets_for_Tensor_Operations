@@ -281,6 +281,7 @@ gather() replaces one dimension with index values. For example, if we have a sen
 ```python
 
 # input: 3D tensor, out: 3D tensor
+# out and index will have the same shape
 
 # replace the ith element of dim 0 in out with (index[i][j][k])-th element of input in dim 0
 out[i][j][k] = input[index[i][j][k]][j][k]  # if dim == 0
@@ -337,4 +338,44 @@ tensor([[47, 46, 45],
 tensor([[ 47,  46,  45],
         [ 95,  94,  93],
         [143, 142, 141]])
+```
+
+
+However, for most cases, index and input does not have the same dimension, this will raise an error. Inorder to use ``gather()``, we can use ``squeeze()`` or ``expand()`` to make sure they have the same dimension.
+
+Examples:
+
+```python
+# input tensor
+a = torch.randn(2, 3, 4)
+
+# index tensor
+b = torch.randn(2, 3)
+_, index = b.topk(dim=1, k=2) # shape: [2, 2]
+
+# we have input shape: [2, 3, 4], and index shape: [2, 2]
+# we want to extract feats from input tensor according to the index
+# the output shape we want is out: [2, 2, 4]
+# inorder to use gather, we first unsqueeze the index shape from [2, 2] to [2, 2, 1]
+# index shape of [2, 2, 1] will result the shape of out become: [2, 2, 1], but we want
+# to extract all 4 channels of the input tensor with shape [2, 2, 4]
+# so we replicate the index 4 times to [2, 2, 4], expand function can achieve this goal
+# expand function do not consume extra memory, only create more views
+
+index = index.unsqueeze(-1).expand(-1, -1, a.shape[-1])
+out = torch.gather(input=a, index=index, dim=1)
+
+
+print('------')
+print(a)
+print(index[:, :, 0])
+print('------')
+
+# as we can see, a and out have the same result
+print(a[0, index[0, 0, 0], :])
+print(a[0, index[0, 1, 0], :])
+print(a[1, index[1, 0, 0], :])
+print(a[1, index[1, 1, 0], :])
+print()
+print(out)
 ```
