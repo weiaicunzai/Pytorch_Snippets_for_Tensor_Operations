@@ -216,3 +216,43 @@ Output:
 ```python
 torch.Size([100, 16])
 ```
+
+## How Masked Index Works in Pytorch
+
+Explain how masked index works in multi dimension tensor
+
+```python
+a = torch.randn((2, 2, 4, 4))
+#
+mask = a.sum(dim=(2, 3)) > 0
+
+#the shape of mask is torch.Size([2, 2])
+print(mask, mask.shape)
+
+# the shape of a is [2, 2, 4, 4]
+
+# matching process........................................
+# first compare the shape of two tensors (mask and a)
+# the mask index start to match with the index of a start from index 0 (the first dimension)
+# e.g. the shape of mask is 2, 2, and the first two dimension of a is 2, 2
+# therefore the mask and tensor a are matched with each other in the first and second dimension
+print("a.shape:", a.shape, "a[mask].shape:", a[mask].shape)
+```
+
+
+Output of multiple runs
+```python
+# the shape of mask is [2, 2], the shape of a is [2, 2, 4, 4]
+# therefore the first two dimensions of a are masked
+# there are 4 elements in mask,  4 elements (each element is a 4x4 tensor in this case) in a's first two dimension
+# the shape of a[mask] is  [N, 4, 4], N is number of selected elements in mask
+# if no element is selected by the mask, the output tensor is in shape [0, 4, 4]
+
+tensor([[ True,  True],
+        [False, False]]) torch.Size([2, 2])
+a.shape: torch.Size([2, 2, 4, 4]) a[mask].shape: torch.Size([2, 4, 4])
+
+tensor([[False, False],
+        [False, False]]) torch.Size([2, 2])
+a.shape: torch.Size([2, 2, 4, 4]) a[mask].shape: torch.Size([0, 4, 4])
+```
