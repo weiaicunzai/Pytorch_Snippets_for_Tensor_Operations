@@ -219,7 +219,8 @@ torch.Size([100, 16])
 
 ## Explain How Masked Index Works in Pytorch
 
-Explain how masked index works in multi dimension tensor
+Explain how masked index works in multi dimension tensor, mask is bool type.
+
 
 ```python
 a = torch.randn((2, 2, 4, 4))
@@ -227,6 +228,7 @@ a = torch.randn((2, 2, 4, 4))
 mask = a.sum(dim=(2, 3)) > 0
 
 #the shape of mask is torch.Size([2, 2])
+
 print(mask, mask.shape)
 
 # the shape of a is [2, 2, 4, 4]
@@ -248,6 +250,7 @@ Output of multiple runs
 # the shape of a[mask] is  [N, 4, 4], N is number of selected elements in mask
 # if no element is selected by the mask, the output tensor is in shape [0, 4, 4]
 
+
 tensor([[ True,  True],
         [False, False]]) torch.Size([2, 2])
 a.shape: torch.Size([2, 2, 4, 4]) a[mask].shape: torch.Size([2, 4, 4])
@@ -255,6 +258,21 @@ a.shape: torch.Size([2, 2, 4, 4]) a[mask].shape: torch.Size([2, 4, 4])
 tensor([[False, False],
         [False, False]]) torch.Size([2, 2])
 a.shape: torch.Size([2, 2, 4, 4]) a[mask].shape: torch.Size([0, 4, 4])
+```
+
+
+**if mask is long type, this may not be the case**
+```python
+a.shape : [a1, a2, a3]
+mask.shape : [m1, m2, m3, m4] # mask.dtype is int64
+
+# it is basically like:
+# mask = mask.view(m1 * m2 * m3 * m4)
+# out = a[mask]
+# out = out.view(m1, m2, m3, m4, a2, a3)
+# only indexing from the first dimension
+
+out = a[mask].shape :[m1, m2, m3, m4, a2, a3]
 ```
 
 ## Explain How gather() Works in Pytorch
