@@ -281,6 +281,9 @@ x = torch.arange(3 * 3 * 4 * 4)
 x = x.reshape(3, 3, 4, 4)
 x = x.view(3, -1)
 values, indices = x.topk(3, dim=1)
+# indices and x should have the same number of dimension
+# e.g.  x: [4, 4], index[4, 3] :ok
+# e.g.  x: [4, 4], index[4, 3, 3] :not ok
 c = torch.gather(x, index=indices, dim=1)
 
 print(x)
