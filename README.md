@@ -63,6 +63,58 @@ tensor([[ True, False, False, False],
 # mask[3, 3] = True means x[3] == x[3];
 ```
 
+## Distance Matrix of two tokens
+Snippet Source: [Relative Position Embeddings](https://github.com/evelinehong/Transformer_Relative_Position_PyTorch/blob/fd1163eb72d74538932f4f2d62e9c2e876f232e5/relative_position.py#L13C11-L13C11)
+
+Examples:
+```python
+# we have
+q_len=5
+v_len=5
+
+# we want:
+# Distance between two tokens in a seq
+# in matrix M,  M[i, j] represent distance between the ith and jth token in the same sequence
+tensor([[ 0,  1,  2,  3,  4],
+        [-1,  0,  1,  2,  3],
+        [-2, -1,  0,  1,  2],
+        [-3, -2, -1,  0,  1],
+        [-4, -3, -2, -1,  0]])
+```
+
+Code:
+```python
+a = torch.arange(5)
+b = torch.arange(5)
+
+# a[None, :] broad cast to
+# tensor([[ 0,  1,  2,  3,  4],
+#        [0,  1,  2,  3,  4],
+#        [0,  1,  2,  3,  4],
+#        [0,  1,  2,  3,  4],
+#        [0,  1,  2,  3,  4]]
+# b[:, None] broad cast to
+# tensor([[0, 0, 0, 0, 0],
+#         [1, 1, 1, 1, 1],
+#         [2, 2, 2, 2, 2],
+#         [3, 3, 3, 3，3],
+#         [4, 4, 4, 4, 4]])
+
+
+output = a[None,:] - b[:,None]
+
+print(output)
+```
+Output:
+```python
+tensor([[ 0,  1,  2,  3,  4],
+        [-1,  0,  1,  2,  3],
+        [-2, -1,  0,  1,  2],
+        [-3, -2, -1,  0,  1],
+        [-4, -3, -2, -1,  0]])
+
+```
+
 
 ## Get the Index (start from 1) of Elements Which Are Different From the Last Element in a List
 Snippet Source: [SWAV](https://github.com/facebookresearch/swav/blob/5e073db0cc69dea22aa75e92bfdd75011e888f28/src/resnet50.py#L308)
